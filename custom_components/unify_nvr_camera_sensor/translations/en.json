@@ -1,0 +1,53 @@
+{
+  "config": {
+    "step": {
+      "user": {
+        "title": "Unify NVR Connection",
+        "description": "Enter the IP address and local credentials for your Unify Protect NVR.",
+        "data": {
+          "nvr_host": "NVR IP address",
+          "username": "Username",
+          "password": "Password"
+        }
+      },
+      "cameras": {
+        "title": "Camera Selection",
+        "description": "Select which cameras to monitor and configure detection thresholds.",
+        "data": {
+          "cameras": "Cameras to monitor",
+          "gap_threshold": "Recording gap threshold (minutes)",
+          "poll_interval": "Poll interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Invalid username or password.",
+      "cannot_connect": "Cannot connect to the NVR. Check the IP address and that Unify Protect is reachable."
+    },
+    "abort": {
+      "already_configured": "This NVR is already configured.",
+      "no_cameras_found": "No cameras were found on this NVR."
+    }
+  },
+  "options": {
+    "step": {
+      "init": {
+        "title": "Update Camera Selection",
+        "description": "Cameras are re-fetched from the NVR. Update your selection and thresholds.",
+        "data": {
+          "cameras": "Cameras to monitor",
+          "gap_threshold": "Recording gap threshold (minutes)",
+          "poll_interval": "Poll interval (seconds)"
+        }
+      }
+    },
+    "error": {
+      "invalid_auth": "Stored credentials are no longer valid.",
+      "cannot_connect": "Cannot connect to the NVR."
+    },
+    "abort": {
+      "invalid_auth": "Stored credentials are no longer valid.",
+      "cannot_connect": "Cannot connect to the NVR."
+    }
+  }
+}

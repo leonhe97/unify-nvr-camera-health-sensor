@@ -1,0 +1,12 @@
+{
+  "domain": "unify_nvr_camera_sensor",
+  "name": "Unify NVR Camera Sensor",
+  "version": "1.0.0",
+  "config_flow": true,
+  "homeassistant": "2024.1.0",
+  "documentation": "https://github.com/leonhe97/unify-nvr-camera-availability-sensor",
+  "issue_tracker": "https://github.com/leonhe97/unify-nvr-camera-availability-sensor/issues",
+  "requirements": ["uiprotect>=6.0.0"],
+  "codeowners": ["@leonhe97"],
+  "iot_class": "local_polling"
+}
