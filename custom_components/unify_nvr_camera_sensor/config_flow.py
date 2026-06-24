@@ -83,6 +83,9 @@ class UnifyNvrConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
         errors = {}
 
         if user_input is not None:
+            await self.async_set_unique_id(user_input[CONF_NVR_HOST])
+            self._abort_if_unique_id_configured()
+
             client = UnifyProtectClient(
                 user_input[CONF_NVR_HOST],
                 user_input[CONF_USERNAME],
@@ -94,9 +97,6 @@ class UnifyNvrConfigFlow(config_entries.ConfigFlow, domain=DOMAIN):
 
                 if not self._discovered_cameras:
                     return self.async_abort(reason="no_cameras_found")
-
-                await self.async_set_unique_id(user_input[CONF_NVR_HOST])
-                self._abort_if_unique_id_configured()
 
                 self._host = user_input[CONF_NVR_HOST]
                 self._username = user_input[CONF_USERNAME]
