@@ -50,11 +50,11 @@ class UnifyProtectClient:
         )
         return result
 
-    async def check_recording_at(self, camera_id: str, lookback_seconds: int) -> bool:
-        """Return True if the camera has a recording from lookback_seconds ago."""
-        # Unifi Protect recording-snapshot expects local time, not UTC
-        local_offset = time.localtime().tm_gmtoff
-        ts = int((time.time() + local_offset - lookback_seconds) * 1000)
+    async def get_recording_snapshot_bytes(
+        self, camera_id: str, lookback_seconds: int
+    ) -> bytes | None:
+        """Fetch raw recording-snapshot bytes from lookback_seconds ago."""
+        ts = int((time.time() - lookback_seconds) * 1000)
 
         _LOGGER.debug(
             "Checking recording for camera %s at ts=%d (%ds ago)",
@@ -62,12 +62,16 @@ class UnifyProtectClient:
             ts,
             lookback_seconds,
         )
-        result = await self._api.api_request_raw(
+        return await self._api.api_request_raw(
             f"cameras/{camera_id}/recording-snapshot",
             method="get",
             params={"ts": ts},
             raise_exception=False,
         )
+
+    async def check_recording_at(self, camera_id: str, lookback_seconds: int) -> bool:
+        """Return True if the camera has a recording from lookback_seconds ago."""
+        result = await self.get_recording_snapshot_bytes(camera_id, lookback_seconds)
         has_recording = bool(result and len(result) > 0)
         _LOGGER.debug(
             "Camera %s recording %ds ago: %s (%d bytes)",
